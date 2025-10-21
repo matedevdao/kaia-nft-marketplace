@@ -68,7 +68,7 @@ contract NFTMarketplace is ReentrancyGuard, ERC721Holder {
             listing.tokenId
         );
 
-        payable(listing.owner).transfer(msg.value);
+        payable(listing.owner).sendValue(msg.value);
 
         delete listings[listId];
 
