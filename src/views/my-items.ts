@@ -1,6 +1,6 @@
 import { el } from '@webtaku/el';
-import { watchAccount, getAccount, simulateContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions';
 import { isAddress } from 'viem';
+import { getAccount, simulateContract, waitForTransactionReceipt, watchAccount, writeContract } from 'wagmi/actions';
 import { fetchHeldNfts, type HeldNft } from '../api/nfts';
 import { wagmiConfig } from '../components/wallet';
 import './my-items.css';
@@ -187,7 +187,7 @@ export class MyItems {
       const hash = await writeContract(wagmiConfig, request);
       await waitForTransactionReceipt(wagmiConfig, { hash });
 
-      this.toast('success', '전송 완료!');
+      this.toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…<br>목록에 반영되는데 1분 정도 소요됩니다.</small>`);
     } catch (err: any) {
       console.error(err);
       this.toast('danger', err?.shortMessage || err?.message || '전송 실패');
@@ -208,8 +208,8 @@ export class MyItems {
     }
     const detail = { ...this.pending, priceEth };
     (this.dlgList as any).open = false;
-    // 상위(메인)에서 marketplace.list() 처리
-    window.dispatchEvent(new CustomEvent('myitems:list', { detail }));
+
+    //TODO:
   }
 
   private renderSkeletons(n = 8) {
