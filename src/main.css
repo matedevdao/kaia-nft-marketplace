@@ -1,5 +1,4 @@
 @import "@rainbow-me/rainbowkit/styles.css";
-@import "@ionic/core/css/ionic.bundle.css";
 
 html,
 body {
@@ -103,7 +102,6 @@ ion-modal.fullscreen {
 }
 
 html {
-	height: 100%;
 	box-sizing: border-box;
 	line-height: var(--sl-line-height-normal);
 	padding: 0;
@@ -111,7 +109,6 @@ html {
 }
 
 body {
-	height: 100%;
 	font: 16px var(--sl-font-sans);
 	font-weight: var(--sl-font-weight-normal);
 	background-color: var(--docs-background-color);

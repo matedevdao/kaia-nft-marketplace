@@ -1,0 +1,21 @@
+/* MyItems 뷰 그리드 */
+.items-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* 카드 미디어가 너무 커서 흘러내리지 않게 */
+.nft-card .card-media {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 10px 14px;
+  justify-content: flex-end;
+}

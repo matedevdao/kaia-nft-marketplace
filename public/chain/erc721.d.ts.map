@@ -1,0 +1,1 @@
+{"version":3,"file":"erc721.d.ts","sourceRoot":"","sources":["../../src/chain/erc721.ts"],"names":[],"mappings":"AASA,eAAO,MAAM,SAAS;;;;;;;;;;;;;;;EAYZ,CAAC;AAEX,wBAAsB,OAAO,CAAC,MAAM,EAAE;IACpC,QAAQ,EAAE,KAAK,MAAM,EAAE,CAAC;IACxB,EAAE,EAAE,KAAK,MAAM,EAAE,CAAC;IAClB,OAAO,EAAE,MAAM,CAAC;CACjB;;;;;;;;;;;;;;;;;;;;;;GAiBA"}
