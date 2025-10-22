@@ -11,14 +11,20 @@
     "deploy": "gh-pages -d public"
   },
   "dependencies": {
-    "@webtaku/el": "^0.1.0",
-    "@gaiaprotocol/client-common": "^0.0.9",
     "@ionic/core": "^8.7.6",
-    "navigo": "^8.11.1"
+    "@rainbow-me/rainbowkit": "^2.2.9",
+    "@tanstack/react-query": "^5.90.5",
+    "@webtaku/el": "^0.1.0",
+    "navigo": "^8.11.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "wagmi": "^2.18.2"
   },
   "devDependencies": {
     "@shoelace-style/shoelace": "^2.20.1",
     "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "css-loader": "^7.1.2",
     "csv-parse": "^6.1.0",
     "gh-pages": "^6.3.0",

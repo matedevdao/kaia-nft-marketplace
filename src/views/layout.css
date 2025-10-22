@@ -1,9 +1,16 @@
-/* 헤더 뼈대 */
+:root {
+  --header-height: 64px;
+  --container-max: 1200px;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --header-border: rgba(0, 0, 0, 0.06);
+}
+
+/* 헤더 */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: saturate(1.2) blur(10px);
+  backdrop-filter: saturate(1.1) blur(10px);
   background: var(--header-bg);
   border-bottom: 1px solid var(--header-border);
 }
@@ -14,11 +21,11 @@
   margin: 0 auto;
   padding: 0 16px;
 
+  /* brand | nav | right-actions */
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  /* brand | nav | menuToggle */
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .brand {
@@ -27,35 +34,58 @@
   text-decoration: none;
   color: inherit;
   letter-spacing: .2px;
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+}
 
-  img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
+.brand img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
 }
 
 .primary-nav {
-  display: flex;
-  gap: 4px;
+  justify-self: center;
+  /* 중앙 정렬 */
+  display: inline-flex;
+  gap: 8px;
 }
 
+/* Shoelace text 버튼이 테마색(주황)으로 보일 때 → 상속 색 사용 */
 .primary-nav sl-button::part(base) {
-  padding: 0 10px;
+  padding: 0 12px;
   font-size: 15px;
+  color: inherit;
+  /* <-- 핵심 */
 }
 
-/* 모바일 토글: 기본은 감춤, 모바일에서 보임 */
+/* 우측 액션 */
+.right-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 본문: 헤더 높이만큼 여백(앵커 점프/고정 헤더 겹침 방지) */
+.content-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 24px 16px;
+  min-height: calc(100dvh - var(--header-height));
+}
+
+/* 모바일 토글은 모바일에서만 보이게 */
 .menu-toggle {
   display: none;
 }
 
-/* 반응형 */
+/* 모바일 */
 @media (max-width: 768px) {
+  .site-header .inner {
+    gap: 0;
+  }
+
   .primary-nav {
     display: none;
   }
@@ -63,4 +93,41 @@
   .menu-toggle {
     display: inline-flex;
   }
+
+  .right-actions {
+    margin-left: auto;
+    gap: 8px;
+
+    >.connect-button {
+      display: none;
+    }
+  }
+}
+
+/* ----- Drawer 스타일 정돈 ----- */
+.drawer-body {
+  display: grid;
+  gap: 16px;
+  padding: 12px 4px 20px;
+}
+
+.menu-card {
+  padding: 8px 6px;
+  background: var(--sl-panel-background-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .02);
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 6px;
+}
+
+/* 메뉴 아이템 좌우 여백 살짝 키우기 */
+sl-menu::part(base) {
+  padding-block: 6px;
+}
+
+sl-menu-item::part(base) {
+  padding-inline: 16px;
 }
