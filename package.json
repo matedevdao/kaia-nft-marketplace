@@ -1,12 +1,20 @@
 {
+  "name": "kaia-nft-marketplace",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "watch": "nodemon --watch dist/pages --exec node generate.js",
-    "webpack-dev": "node node_modules/webpack-cli/bin/cli.js --mode development --watch --config webpack.config.dev.ts",
-    "webpack-prod": "node node_modules/webpack-cli/bin/cli.js --mode production --config webpack.config.prod.ts"
+    "build": "NODE_ENV=production webpack --mode=production",
+    "dev": "NODE_ENV=development webpack serve --watch --mode=development",
+    "start": "NODE_ENV=development webpack serve --watch --mode=development",
+    "test": "vitest",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d public"
   },
-  "type": "module",
   "dependencies": {
-    "matedevdao-common": "^0.0.4"
+    "@webtaku/el": "^0.1.0",
+    "@gaiaprotocol/client-common": "^0.0.9",
+    "@ionic/core": "^8.7.6",
+    "navigo": "^8.11.1"
   },
   "devDependencies": {
     "@shoelace-style/shoelace": "^2.20.1",

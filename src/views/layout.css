@@ -1,0 +1,66 @@
+/* 헤더 뼈대 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: saturate(1.2) blur(10px);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+}
+
+.site-header .inner {
+  height: var(--header-height);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  /* brand | nav | menuToggle */
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  color: inherit;
+  letter-spacing: .2px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+}
+
+.primary-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.primary-nav sl-button::part(base) {
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+/* 모바일 토글: 기본은 감춤, 모바일에서 보임 */
+.menu-toggle {
+  display: none;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .primary-nav {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+}
