@@ -1,5 +1,6 @@
 import '@shoelace-style/shoelace';
 import Navigo from 'navigo';
+import { sendNft } from './chain/erc721';
 import { createRainbowKit } from './components/wallet';
 import './main.css';
 import { Explore } from './views/explore';
@@ -27,4 +28,31 @@ router.on('/history', () => {
     layout.mountContent(history.root);
 });
 router.resolve();
+function toast(kind, msg) {
+    const a = document.createElement('sl-alert');
+    a.setAttribute('variant', kind);
+    a.setAttribute('duration', '3000');
+    a.setAttribute('closable', '');
+    a.innerHTML = msg;
+    document.body.appendChild(a);
+    customElements.whenDefined('sl-alert').then(() => a.toast?.());
+}
+window.addEventListener('myitems:transfer', async (ev) => {
+    const { contract, tokenId, to } = ev.detail;
+    try {
+        toast('primary', '전송을 시작합니다…');
+        const { hash } = await sendNft({
+            contract,
+            to,
+            tokenId: BigInt(tokenId)
+        });
+        toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…</small>`);
+        // 리스트 새로고침
+        window.dispatchEvent(new CustomEvent('myitems:refresh'));
+    }
+    catch (err) {
+        console.error(err);
+        toast('danger', err?.shortMessage || err?.message || '전송 실패');
+    }
+});
 //# sourceMappingURL=main.js.map

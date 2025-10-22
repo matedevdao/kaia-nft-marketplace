@@ -2483,3 +2483,10 @@ sl-menu-item::part(base) {
   object-fit: cover;
   display: block;
 }
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 10px 14px;
+  justify-content: flex-end;
+}

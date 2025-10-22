@@ -32,8 +32,8 @@ export class Layout {
         this.drawer.addEventListener('sl-select', (e) => {
             const key = e.detail?.item?.dataset?.key;
             if (key) {
-                // TODO: 라우팅 연결
-                this.drawer.hide();
+                router.navigate(`/${key}`); // ← 이동 추가
+                this.drawer.hide(); // 드로어 닫기
             }
         });
         // 데스크톱 내비 클릭
