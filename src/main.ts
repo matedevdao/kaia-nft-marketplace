@@ -54,9 +54,7 @@ window.addEventListener('myitems:transfer', async (ev: any) => {
       to,
       tokenId: BigInt(tokenId)
     });
-    toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…</small>`);
-    // 리스트 새로고침
-    window.dispatchEvent(new CustomEvent('myitems:refresh'));
+    toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…<br>목록에 반영되는데 1분 정도 소요됩니다.</small>`);
   } catch (err: any) {
     console.error(err);
     toast('danger', err?.shortMessage || err?.message || '전송 실패');

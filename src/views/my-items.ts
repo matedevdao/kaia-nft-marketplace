@@ -1,4 +1,3 @@
-// src/views/my-items.ts
 import { el } from '@webtaku/el';
 import { watchAccount, getAccount, simulateContract, writeContract, waitForTransactionReceipt } from 'wagmi/actions';
 import { isAddress } from 'viem';
@@ -77,14 +76,10 @@ export class MyItems {
     this.unwatch = watchAccount(wagmiConfig, {
       onChange: (account) => this.setHolder((account.address as `0x${string}`) ?? null)
     });
-
-    // refresh hook after external actions succeed (optional)
-    window.addEventListener('myitems:refresh', this.refreshHandler);
   }
 
   destroy() {
     this.unwatch?.(); this.unwatch = undefined;
-    window.removeEventListener('myitems:refresh', this.refreshHandler);
   }
 
   private toast(variant: 'primary' | 'success' | 'neutral' | 'warning' | 'danger', msg: string) {
@@ -193,7 +188,6 @@ export class MyItems {
       await waitForTransactionReceipt(wagmiConfig, { hash });
 
       this.toast('success', '전송 완료!');
-      window.dispatchEvent(new CustomEvent('myitems:refresh'));
     } catch (err: any) {
       console.error(err);
       this.toast('danger', err?.shortMessage || err?.message || '전송 실패');
