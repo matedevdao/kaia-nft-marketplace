@@ -1,11 +1,12 @@
 // explore.ts
-import { el } from "@webtaku/el";
-import { formatEther, isAddressEqual, getAddress } from "viem";
-import "./explore.css";
-import { ActiveListing, getActiveListings, getListingById } from "../api/nfts";
-import { buyListing, cancelListing } from "../contracts/nft-marketplace";
 import { getAccount } from "@wagmi/core";
+import { el } from "@webtaku/el";
+import { formatEther, getAddress, isAddressEqual } from "viem";
+import { syncMarketplaceEventsApi, syncNftOwnershipFromEventsApi } from "../api/api";
+import { ActiveListing, getActiveListings, getListingById } from "../api/nfts";
 import { wagmiConfig } from "../components/wallet";
+import { buyListing, cancelListing } from "../contracts/nft-marketplace";
+import "./explore.css";
 
 export class Explore {
   root: HTMLElement;
@@ -240,6 +241,8 @@ export class Explore {
       this.toast(`구매 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
+      await syncNftOwnershipFromEventsApi()
+      await syncMarketplaceEventsApi()
     } catch (e: any) {
       this.toast(e?.shortMessage || e?.message || "구매 실패", "danger");
     }
@@ -252,6 +255,8 @@ export class Explore {
       this.toast(`취소 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
+      await syncNftOwnershipFromEventsApi()
+      await syncMarketplaceEventsApi()
     } catch (e: any) {
       this.toast(e?.shortMessage || e?.message || "취소 실패", "danger");
     }

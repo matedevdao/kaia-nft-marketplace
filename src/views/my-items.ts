@@ -187,7 +187,7 @@ export class MyItems {
       const hash = await writeContract(wagmiConfig, request);
       await waitForTransactionReceipt(wagmiConfig, { hash });
 
-      this.toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…</small>`);
+      this.toast('success', `전송 성공!\n${hash.slice(0, 10)}…`);
 
       await syncNftOwnershipFromEventsApi();
 
@@ -220,9 +220,10 @@ export class MyItems {
 
     const { hash } = await listNft(detail.contract, detail.tokenId, parseEther(detail.priceEth));
 
-    this.toast('success', `리스팅 성공!<br><small>${hash.slice(0, 10)}…</small>`);
+    this.toast('success', `리스팅 성공!\n${hash.slice(0, 10)}…`);
 
-    await syncMarketplaceEventsApi();
+    await syncNftOwnershipFromEventsApi()
+    await syncMarketplaceEventsApi()
 
     this.load();
   }

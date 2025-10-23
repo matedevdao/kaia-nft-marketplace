@@ -72,4 +72,11 @@ export declare function getActiveListings(params?: GetActiveListingsParams): Pro
  * 사용 예: const all = await getAllActiveListings({ nft_address: '0x...' });
  */
 export declare function getAllActiveListings(params?: GetActiveListingsParams): Promise<ActiveListing[]>;
+export type GetListingByIdOptions = {
+    include_inactive?: boolean;
+    signal?: AbortSignal;
+};
+export declare function getListingById(list_id: string | number, opts?: GetListingByIdOptions): Promise<{
+    item: ActiveListing;
+}>;
 //# sourceMappingURL=nfts.d.ts.map
