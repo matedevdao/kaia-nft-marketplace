@@ -2923,6 +2923,31 @@ sl-menu::part(base) {
 sl-menu-item::part(base) {
   padding-inline: 16px;
 }
+
+.site-footer {
+  margin-top: 48px;
+  padding: 24px 16px;
+  border-top: 1px solid var(--sl-color-neutral-200, #e5e7eb);
+  color: var(--sl-color-neutral-700, #4b5563);
+  text-align: center;
+  font-size: 14px;
+}
+
+
+.site-footer a {
+  color: inherit;
+  /* 파란색 제거 → 상위 색상 상속 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  font-weight: 500;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+  /* 마우스 오버 시만 밑줄 표시 */
+  color: var(--sl-color-primary-600, #2563eb);
+  /* 살짝 강조색 */
+}
 /* MyItems 뷰 그리드 */
 .items-grid {
   display: grid;
