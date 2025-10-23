@@ -2336,6 +2336,192 @@ ion-modal ion-content {
 	--header-bg: rgba(255, 255, 255, 0.8);
 	--header-border: rgba(0, 0, 0, 0.06);
 }
+/* ===== Explore 공통 레이아웃 ===== */
+section.explore {
+  display: block;
+}
+
+section.explore .page-title {
+  margin: 4px 0 6px;
+}
+
+section.explore .page-subtitle {
+  margin: 0 0 14px;
+  color: var(--sl-color-neutral-600);
+  font-size: 0.95rem;
+}
+
+/* 상태 바 (빈 상태/에러/알림) */
+section.explore .state-bar {
+  margin: 8px 0 12px;
+}
+
+/* ===== 필터 행 ===== */
+section.explore .filters-row {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+}
+
+/* Shoelace <sl-input> 기본 너비 보정 */
+section.explore .filters-row sl-input {
+  min-width: 280px;
+  max-width: 420px;
+}
+
+/* 반응형: 좁은 화면에서는 한 줄 차지 */
+@media (max-width: 520px) {
+  section.explore .filters-row sl-input {
+    flex: 1 1 100%;
+  }
+}
+
+/* ===== 카드 그리드 ===== */
+/* MyItems의 그리드 규칙을 그대로 사용 */
+section.explore .items-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* 넓은 화면에서 카드가 너무 퍼지지 않도록 최대 폭 소폭 제한(선택) */
+@media (min-width: 1440px) {
+  section.explore .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+/* ===== 카드 공통 ===== */
+section.explore sl-card.nft-card {
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  overflow: hidden;
+}
+
+section.explore sl-card.nft-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sl-shadow-large);
+}
+
+/* 카드 미디어: MyItems와 동일 규칙 */
+section.explore .nft-card .card-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  background: var(--sl-color-neutral-200);
+}
+
+/* 카드 텍스트 영역 */
+section.explore .nft-card .card-meta {
+  padding: 10px;
+}
+
+section.explore .nft-card .card-meta .name {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 가격/오너 행 (Explore 전용 표시) */
+section.explore .nft-card .price-row,
+section.explore .nft-card .owner-row {
+  padding: 0 10px;
+}
+
+section.explore .nft-card .price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+section.explore .nft-card .price-row .label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+section.explore .nft-card .owner-row {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--sl-color-neutral-700);
+}
+
+/* 카드 액션: MyItems 규칙을 재사용 */
+section.explore .card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 10px 14px;
+  justify-content: flex-end;
+}
+
+/* ===== 로딩 스켈레톤(append 시 식별용) ===== */
+section.explore sl-card[data-skeleton="1"] {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ===== 하단 '더 불러오기' 버튼 래퍼(선택) ===== */
+section.explore .load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* ===== 다크 모드 대비 ===== */
+@media (prefers-color-scheme: dark) {
+  section.explore .page-subtitle {
+    color: var(--sl-color-neutral-500);
+  }
+
+  section.explore .nft-card .owner-row {
+    color: var(--sl-color-neutral-400);
+  }
+
+  section.explore .nft-card .card-media {
+    background: var(--sl-color-neutral-800);
+  }
+}
+
+/* 카드 미디어 (이미지) */
+section.explore .nft-card .card-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  background: var(--sl-color-neutral-200);
+  transition: transform 0.15s ease;
+}
+
+section.explore .nft-card:hover .card-media {
+  transform: scale(1.02);
+}
+
+/* NFT 대사(dialogue) */
+section.explore .nft-card .dialogue-row {
+  padding: 0 10px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--sl-color-neutral-600);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 다크모드에서 대사 색상 보정 */
+@media (prefers-color-scheme: dark) {
+  section.explore .nft-card .dialogue-row {
+    color: var(--sl-color-neutral-400);
+  }
+}
 :root {
   --header-height: 64px;
   --container-max: 1200px;

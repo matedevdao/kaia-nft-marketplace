@@ -1,6 +1,7 @@
 import { el } from '@webtaku/el';
 import { isAddress, parseEther } from 'viem';
 import { getAccount, simulateContract, waitForTransactionReceipt, watchAccount, writeContract } from 'wagmi/actions';
+import { syncMarketplaceEventsApi, syncNftOwnershipFromEventsApi } from '../api/api';
 import { fetchHeldNfts, type HeldNft } from '../api/nfts';
 import { wagmiConfig } from '../components/wallet';
 import { listNft } from '../contracts/nft-marketplace';
@@ -34,8 +35,6 @@ export class MyItems {
   private dlgList!: HTMLElement;
   private iptPrice!: HTMLElement;
   private pending: { contract?: `0x${string}`; tokenId?: bigint; nft?: HeldNft } = {};
-
-  private refreshHandler = () => { if (this.holder) this.load(); };
 
   constructor() {
     const title = el('h2.page-title', '내 NFT');
@@ -188,7 +187,11 @@ export class MyItems {
       const hash = await writeContract(wagmiConfig, request);
       await waitForTransactionReceipt(wagmiConfig, { hash });
 
-      this.toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…<br>목록에 반영되는데 1분 정도 소요됩니다.</small>`);
+      this.toast('success', `전송 성공!<br><small>${hash.slice(0, 10)}…</small>`);
+
+      await syncNftOwnershipFromEventsApi();
+
+      this.load();
     } catch (err: any) {
       console.error(err);
       this.toast('danger', err?.shortMessage || err?.message || '전송 실패');
@@ -215,7 +218,13 @@ export class MyItems {
       return;
     }
 
-    await listNft(detail.contract, detail.tokenId, parseEther(detail.priceEth));
+    const { hash } = await listNft(detail.contract, detail.tokenId, parseEther(detail.priceEth));
+
+    this.toast('success', `리스팅 성공!<br><small>${hash.slice(0, 10)}…</small>`);
+
+    await syncMarketplaceEventsApi();
+
+    this.load();
   }
 
   private renderSkeletons(n = 8) {
