@@ -24,7 +24,6 @@ export declare class History {
     private renderItems;
     private renderRow;
     private openDetail;
-    private toast;
     private renderSkeletons;
     private stripSkeletons;
     private updateFooterState;

@@ -2586,14 +2586,13 @@ section.history .page-title {
 section.history .page-subtitle {
   margin: 0 0 14px;
   color: var(--sl-color-neutral-600);
-  font-size: 0.95rem;
+  font-size: .95rem;
 }
 
 section.history .state-bar {
   margin: 8px 0 12px;
 }
 
-/* filters */
 section.history .filters-row {
   display: flex;
   gap: 12px;
@@ -2608,7 +2607,7 @@ section.history .filters-row sl-select {
   max-width: 420px;
 }
 
-@media (max-width: 520px) {
+@media (max-width:520px) {
 
   section.history .filters-row sl-input,
   section.history .filters-row sl-select {
@@ -2616,7 +2615,6 @@ section.history .filters-row sl-select {
   }
 }
 
-/* list */
 section.history .history-list {
   display: flex;
   flex-direction: column;
@@ -2658,7 +2656,7 @@ section.history .history-row .body .meta-top {
 }
 
 section.history .history-row .body .meta-top .dot {
-  opacity: 0.5;
+  opacity: .5;
 }
 
 section.history .history-row .body .title {
@@ -2681,7 +2679,6 @@ section.history .history-row .actions {
   align-items: center;
 }
 
-/* dialog */
 sl-dialog.history-dialog::part(panel) {
   border-radius: 16px;
 }
@@ -2705,7 +2702,7 @@ sl-dialog.history-dialog::part(panel) {
 }
 
 .history-dialog .detail-meta {
-  font-size: 0.92rem;
+  font-size: .92rem;
   color: var(--sl-color-neutral-700);
   display: grid;
   gap: 6px;
@@ -2719,13 +2716,12 @@ sl-dialog.history-dialog::part(panel) {
   gap: 8px;
 }
 
-@media (max-width: 720px) {
+@media (max-width:720px) {
   .history-dialog .detail-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* footer */
 section.history .load-more-wrap {
   display: flex;
   justify-content: center;

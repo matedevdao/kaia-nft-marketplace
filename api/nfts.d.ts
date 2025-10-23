@@ -79,11 +79,11 @@ export type GetListingByIdOptions = {
 export declare function getListingById(list_id: string | number, opts?: GetListingByIdOptions): Promise<{
     item: ActiveListing;
 }>;
-export type HistoryEventKind = "LISTED" | "SOLD" | "CANCELLED" | "TRANSFER_IN" | "TRANSFER_OUT";
+export type HistoryEventKind = "LISTED" | "SOLD" | "CANCELLED";
 export type HistoryEvent = {
     event_id: number;
     kind: HistoryEventKind;
-    tx_hash: string;
+    tx_hash: string | null;
     block_number: number | null;
     ts_sec: number | null;
     nft_address: string;
