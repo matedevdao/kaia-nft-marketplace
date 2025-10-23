@@ -1,8 +1,9 @@
 import { el } from '@webtaku/el';
-import { isAddress } from 'viem';
+import { isAddress, parseEther } from 'viem';
 import { getAccount, simulateContract, waitForTransactionReceipt, watchAccount, writeContract } from 'wagmi/actions';
 import { fetchHeldNfts, type HeldNft } from '../api/nfts';
 import { wagmiConfig } from '../components/wallet';
+import { listNft } from '../contracts/nft-marketplace';
 import './my-items.css';
 
 const ERC721_ABI = [
@@ -56,11 +57,11 @@ export class MyItems {
     btnSendOk.addEventListener('click', () => this.confirmSend());
 
     // List
-    this.iptPrice = el('sl-input', { type: 'number', label: '가격 (ETH)', placeholder: '0.01', min: 0, step: 0.0001 }) as any;
+    this.iptPrice = el('sl-input', { type: 'number', label: '가격 (KAIA)', min: 0 }) as any;
     const btnListCancel = el('sl-button', { slot: 'footer', variant: 'neutral' }, '취소');
     const btnListOk = el('sl-button', { slot: 'footer', variant: 'primary' }, '리스팅');
     this.dlgList = el('sl-dialog', { label: 'NFT 리스팅' },
-      el('div', { style: { marginBottom: '8px' } }, '판매 가격(ETH)을 입력하세요.'),
+      el('div', { style: { marginBottom: '8px' } }, '판매 가격(KAIA)을 입력하세요.'),
       this.iptPrice, btnListCancel, btnListOk
     );
     btnListCancel.addEventListener('click', () => { (this.dlgList as any).open = false; });
@@ -200,16 +201,21 @@ export class MyItems {
     (this.dlgList as any).open = true;
   }
 
-  private confirmList() {
+  private async confirmList() {
     const priceEth = String((this.iptPrice as any).value ?? '').trim();
     if (!priceEth || Number(priceEth) <= 0) {
-      this.stateBar.replaceChildren(el('sl-alert', { variant: 'warning', open: true }, '유효한 가격(ETH)을 입력하세요.'));
+      this.stateBar.replaceChildren(el('sl-alert', { variant: 'warning', open: true }, '유효한 가격(KAIA)을 입력하세요.'));
       return;
     }
     const detail = { ...this.pending, priceEth };
     (this.dlgList as any).open = false;
 
-    //TODO:
+    if (!detail.contract || detail.tokenId == null) {
+      this.toast('danger', '리스팅 실패');
+      return;
+    }
+
+    await listNft(detail.contract, detail.tokenId, parseEther(detail.priceEth));
   }
 
   private renderSkeletons(n = 8) {

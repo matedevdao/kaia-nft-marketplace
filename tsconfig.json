@@ -20,10 +20,12 @@
     "skipLibCheck": true,
     "strict": true,
     "rootDir": "./src",
-    "outDir": "public"
+    "outDir": "public",
+    "resolveJsonModule": true
   },
   "include": [
-    "./src",
+    "src/**/*",                  // ← 폴더만이 아니라 패턴으로
+    "src/contracts/*.json"       // ← JSON을 확실히 포함
   ],
   "exclude": [
     "node_modules",
