@@ -1,3 +1,4 @@
+export declare const NFT_MARKETPLACE_ADDRESS = "0x53F54285c4112232CC933bE787E3170fe2931218";
 export declare function listNft(nftAddress: `0x${string}`, tokenId: bigint, price: bigint): Promise<{
     hash: `0x${string}`;
     receipt: {

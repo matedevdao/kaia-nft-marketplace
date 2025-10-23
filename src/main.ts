@@ -11,7 +11,7 @@ const BASE_PATH = process.env.NODE_ENV === 'production' ? '/kaia-nft-marketplace
 const router = new Navigo(BASE_PATH) as Navigo;
 
 const layout = new Layout(router)
-document.body.append(layout.header, layout.contentContainer, layout.drawer, createRainbowKit())
+document.body.append(layout.header, layout.contentContainer, layout.drawer, layout.footer, createRainbowKit())
 
 router.on('/', () => {
   const explore = new Explore()

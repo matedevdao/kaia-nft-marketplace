@@ -4,7 +4,8 @@ import { getAccount, simulateContract, waitForTransactionReceipt, watchAccount, 
 import { syncMarketplaceEventsApi, syncNftOwnershipFromEventsApi } from '../api/api';
 import { fetchHeldNfts, type HeldNft } from '../api/nfts';
 import { wagmiConfig } from '../components/wallet';
-import { listNft } from '../contracts/nft-marketplace';
+import { ensureApprovalForAll } from '../contracts/erc721';
+import { listNft, NFT_MARKETPLACE_ADDRESS } from '../contracts/nft-marketplace';
 import './my-items.css';
 
 const ERC721_ABI = [
@@ -217,6 +218,8 @@ export class MyItems {
       this.toast('danger', '리스팅 실패');
       return;
     }
+
+    await ensureApprovalForAll({ nft: detail.contract, operator: NFT_MARKETPLACE_ADDRESS })
 
     const { hash } = await listNft(detail.contract, detail.tokenId, parseEther(detail.priceEth));
 

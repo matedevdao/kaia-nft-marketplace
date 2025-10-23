@@ -9,6 +9,7 @@ export class Layout {
   header: HTMLElement;
   contentContainer: HTMLElement;
   drawer: HTMLElement;
+  footer: HTMLElement;
 
   constructor(router: Navigo) {
     // 브랜드
@@ -87,14 +88,19 @@ export class Layout {
 
     // 본문 컨테이너
     this.contentContainer = el('main.content-container');
-  }
 
-  /** 헤더/드로어를 마운트하고, 외부 콘텐츠를 주입합니다. */
-  mount(target: HTMLElement = document.body, ...content: (HTMLElement | string)[]) {
-    if (!this.drawer.isConnected) document.body.appendChild(this.drawer);
-    if (!this.header.isConnected) target.prepend(this.header);
-    if (!this.contentContainer.isConnected) target.append(this.contentContainer);
-    if (content.length) this.contentContainer.append(...content);
+    this.footer = el(
+      'footer.site-footer',
+      el(
+        'a',
+        {
+          href: 'https://matedevdao.github.io/',
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
+        'Mate Dev DAO에서 만듦'
+      )
+    );
   }
 
   /** 본문 교체 */

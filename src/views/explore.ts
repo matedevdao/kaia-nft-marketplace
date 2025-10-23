@@ -1,5 +1,5 @@
 // explore.ts
-import { getAccount } from "@wagmi/core";
+import { getAccount, getBalance } from "@wagmi/core";
 import { el } from "@webtaku/el";
 import { formatEther, getAddress, isAddressEqual } from "viem";
 import { syncMarketplaceEventsApi, syncNftOwnershipFromEventsApi } from "../api/api";
@@ -236,14 +236,35 @@ export class Explore {
 
   private async onBuy(it: ActiveListing) {
     try {
+      // 0) 연결 확인 및 내 주소 얻기
+      const acc = getAccount(wagmiConfig);
+      if (!acc?.address) {
+        this.toast("지갑이 연결되어 있지 않습니다.", "warning");
+        return;
+      }
+
+      // 1) 내 지갑 잔액 조회
+      const bal = await getBalance(wagmiConfig, { address: acc.address });
+
+      // 2) 잔액 < 가격(wei) 이면 막기
+      const priceWei = BigInt(it.price_wei);
+      if (bal.value < priceWei) {
+        this.toast(
+          `잔액이 부족합니다. 필요: ${formatEther(priceWei)} ${bal.symbol} / 보유: ${bal.formatted} ${bal.symbol}`,
+          "warning"
+        );
+        return;
+      }
+
+      // 3) 통과하면 구매 진행
       this.toast("구매 트랜잭션 전송 중…");
-      const { hash } = await buyListing(BigInt(it.list_id), BigInt(it.price_wei));
+      const { hash } = await buyListing(BigInt(it.list_id), priceWei);
       this.toast(`구매 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
       this.closeDetailIfOpen();
-      await syncNftOwnershipFromEventsApi()
-      await syncMarketplaceEventsApi()
+      await syncNftOwnershipFromEventsApi();
+      await syncMarketplaceEventsApi();
     } catch (e: any) {
       this.toast(e?.shortMessage || e?.message || "구매 실패", "danger");
     }
