@@ -2463,7 +2463,6 @@ section.explore .card-actions {
 
 /* ===== 로딩 스켈레톤(append 시 식별용) ===== */
 section.explore sl-card[data-skeleton="1"] {
-  border-radius: 12px;
   overflow: hidden;
 }
 
