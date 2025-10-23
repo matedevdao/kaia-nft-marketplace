@@ -11,7 +11,6 @@ export declare class MyItems {
     private dlgList;
     private iptPrice;
     private pending;
-    private refreshHandler;
     constructor();
     destroy(): void;
     private toast;
