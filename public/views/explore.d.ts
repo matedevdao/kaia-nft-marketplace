@@ -33,5 +33,6 @@ export declare class Explore {
     private updateFooterState;
     private showEmpty;
     private showError;
+    private closeDetailIfOpen;
 }
 //# sourceMappingURL=explore.d.ts.map

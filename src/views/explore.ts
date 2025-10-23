@@ -241,6 +241,7 @@ export class Explore {
       this.toast(`구매 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
+      this.closeDetailIfOpen();
       await syncNftOwnershipFromEventsApi()
       await syncMarketplaceEventsApi()
     } catch (e: any) {
@@ -255,6 +256,7 @@ export class Explore {
       this.toast(`취소 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
+      this.closeDetailIfOpen();
       await syncNftOwnershipFromEventsApi()
       await syncMarketplaceEventsApi()
     } catch (e: any) {
@@ -398,6 +400,14 @@ export class Explore {
   private showError(err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     this.stateBar.replaceChildren(el("sl-alert", { variant: "danger", open: true }, msg));
+  }
+
+  private closeDetailIfOpen() {
+    try {
+      if (this.dialog && (this.dialog as any).open) {
+        (this.dialog as any).open = false;
+      }
+    } catch (_) { /* noop */ }
   }
 }
 
