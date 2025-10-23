@@ -2463,7 +2463,6 @@ section.explore .card-actions {
 
 /* ===== 로딩 스켈레톤(append 시 식별용) ===== */
 section.explore sl-card[data-skeleton="1"] {
-  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -2615,38 +2614,60 @@ section.history .filters-row sl-select {
   }
 }
 
+
+/* 좁은 화면에서 여백 유지 */
+@media (max-width: 520px) {
+  section.history {
+    padding-inline: 2px;
+    /* 좌우 살짝 공간 */
+  }
+}
+
+/* -----------------------
+   리스트
+   ----------------------- */
 section.history .history-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  /* 카드 간 간격 */
 }
 
+/* 카드(행) */
 section.history .history-row {
   display: grid;
-  grid-template-columns: 64px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  /* 가운데 컬럼 축소 가능 */
+  gap: 14px;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid var(--sl-color-neutral-200);
-  border-radius: 12px;
+  border-radius: 14px;
   background: var(--sl-color-neutral-0);
 }
 
+/* 이미지 썸네일 */
 section.history .history-row img.media {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--sl-color-neutral-200);
 }
 
 section.history .history-row .media-skel {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
+/* 본문 컬럼은 줄어들 수 있어야 ellipsis가 적용됨 */
+section.history .history-row .body {
+  min-width: 0;
+}
+
+/* 메타 (상단) */
 section.history .history-row .body .meta-top {
   font-size: 12px;
   color: var(--sl-color-neutral-600);
@@ -2659,26 +2680,60 @@ section.history .history-row .body .meta-top .dot {
   opacity: .5;
 }
 
+/* 타이틀 */
 section.history .history-row .body .title {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   margin-top: 2px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* 메타 (하단) – 한 줄 말줄임 */
 section.history .history-row .body .meta-bottom {
   font-size: 12px;
   color: var(--sl-color-neutral-700);
-  margin-top: 4px;
+  margin-top: 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* 액션 영역 */
 section.history .history-row .actions {
   display: flex;
   align-items: center;
 }
 
+/* 더 보기 버튼 래퍼 */
+section.history .load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* 모바일에서 카드 여백/크기 보정 */
+@media (max-width: 520px) {
+  section.history .history-row {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  section.history .history-row img.media,
+  section.history .history-row .media-skel {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+  }
+}
+
+/* -----------------------
+   상세 모달
+   ----------------------- */
 sl-dialog.history-dialog::part(panel) {
   border-radius: 16px;
 }
@@ -2716,16 +2771,23 @@ sl-dialog.history-dialog::part(panel) {
   gap: 8px;
 }
 
-@media (max-width:720px) {
+@media (max-width: 720px) {
   .history-dialog .detail-grid {
     grid-template-columns: 1fr;
   }
 }
 
-section.history .load-more-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 12px;
+/* -----------------------
+   다크 모드 살짝 보정
+   ----------------------- */
+@media (prefers-color-scheme: dark) {
+  section.history .page-subtitle {
+    color: var(--sl-color-neutral-500);
+  }
+
+  section.history .history-row img.media {
+    background: var(--sl-color-neutral-800);
+  }
 }
 :root {
   --header-height: 64px;

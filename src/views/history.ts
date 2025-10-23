@@ -1,9 +1,9 @@
+import { getAccount } from "@wagmi/core";
 import { el } from "@webtaku/el";
 import { formatEther, getAddress } from "viem";
-import { getAccount } from "@wagmi/core";
+import { getHistory, HistoryEvent, HistoryEventKind } from "../api/nfts";
 import { wagmiConfig } from "../components/wallet";
 import "./history.css";
-import { getHistory, HistoryEvent, HistoryEventKind } from "../api/nfts";
 
 const KIND_OPTIONS: { value: "" | HistoryEventKind; label: string }[] = [
   { value: "", label: "전체" },
