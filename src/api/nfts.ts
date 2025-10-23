@@ -140,3 +140,38 @@ export async function getAllActiveListings(params: GetActiveListingsParams = {})
   }
   return acc;
 }
+
+// === types.ts 또는 api 파일 상단의 타입 재사용 ===
+// ActiveListing / GetActiveListingsResponse 등 기존 타입 그대로 사용
+
+export type GetListingByIdOptions = {
+  include_inactive?: boolean;   // 구매/취소된 리스팅도 조회
+  signal?: AbortSignal;
+};
+
+export async function getListingById(
+  list_id: string | number,
+  opts: GetListingByIdOptions = {}
+): Promise<{ item: ActiveListing }> {
+  if (list_id === undefined || list_id === null || String(list_id).trim() === "") {
+    throw new Error("list_id is required");
+  }
+  const qs = new URLSearchParams();
+  if (opts.include_inactive) qs.set("include_inactive", "1");
+
+  const url = `${NFT_API_BASE_URI}/listings/${encodeURIComponent(String(list_id))}${qs.toString() ? `?${qs.toString()}` : ""
+    }`;
+
+  const res = await fetch(url, { signal: opts.signal });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error(`getListingById failed: ${res.status} ${res.statusText}`, text);
+    if (res.status === 404) {
+      throw new Error("Listing not found");
+    }
+    throw new Error(`Failed to fetch listing: ${res.status}`);
+  }
+
+  return res.json() as Promise<{ item: ActiveListing }>;
+}
