@@ -175,3 +175,69 @@ export async function getListingById(
 
   return res.json() as Promise<{ item: ActiveListing }>;
 }
+
+export type HistoryEventKind = "LISTED" | "SOLD" | "CANCELLED";
+
+export type HistoryEvent = {
+  event_id: number;
+  kind: HistoryEventKind;
+  tx_hash: string | null;
+  block_number: number | null;
+  ts_sec: number | null;
+  nft_address: string;
+  token_id: string;
+  price_wei: string | null;
+  actor: string | null;
+  from: string | null;
+  to: string | null;
+  nft: {
+    collection: string;
+    id: number;
+    name: string;
+    description?: string;
+    image: string;
+    external_url?: string;
+    animation_url?: string;
+    traits?: Record<string, string | number>;
+    parts?: Record<string, string | number>;
+    holder: string;
+    contract_addr: string;
+    thumbnail?: string;
+  } | null;
+};
+
+export type GetHistoryParams = {
+  account?: string;
+  nft_address?: string;
+  kind?: HistoryEventKind;
+  cursor?: string | number;
+  limit?: number;
+  signal?: AbortSignal;
+};
+
+export type GetHistoryResponse = {
+  items: HistoryEvent[];
+  nextCursor: string | null;
+  filters: { account: string | null; nft_address: string | null; kind: HistoryEventKind | null };
+  pageInfo: { limit: number };
+};
+
+export async function getHistory(params: GetHistoryParams = {}): Promise<GetHistoryResponse> {
+  const { account, nft_address, kind, cursor, limit, signal } = params;
+  const qs = new URLSearchParams();
+
+  if (account) qs.set("account", getAddress(account));
+  if (nft_address) qs.set("nft_address", getAddress(nft_address));
+  if (kind) qs.set("kind", kind);
+  if (cursor !== undefined && cursor !== null) qs.set("cursor", String(cursor));
+  if (limit !== undefined) qs.set("limit", String(limit));
+
+  const url = `${NFT_API_BASE_URI}/history${qs.toString() ? `?${qs.toString()}` : ""}`;
+  const res = await fetch(url, { signal });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error(`getHistory failed: ${res.status} ${res.statusText}`, text);
+    throw new Error(`Failed to fetch history: ${res.status}`);
+  }
+  return res.json() as Promise<GetHistoryResponse>;
+}

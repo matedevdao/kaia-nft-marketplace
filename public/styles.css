@@ -2575,6 +2575,158 @@ sl-dialog.listing-dialog::part(panel) {
     grid-template-columns: 1fr;
   }
 }
+section.history {
+  display: block;
+}
+
+section.history .page-title {
+  margin: 4px 0 6px;
+}
+
+section.history .page-subtitle {
+  margin: 0 0 14px;
+  color: var(--sl-color-neutral-600);
+  font-size: .95rem;
+}
+
+section.history .state-bar {
+  margin: 8px 0 12px;
+}
+
+section.history .filters-row {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+}
+
+section.history .filters-row sl-input,
+section.history .filters-row sl-select {
+  min-width: 220px;
+  max-width: 420px;
+}
+
+@media (max-width:520px) {
+
+  section.history .filters-row sl-input,
+  section.history .filters-row sl-select {
+    flex: 1 1 100%;
+  }
+}
+
+section.history .history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+section.history .history-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--sl-color-neutral-200);
+  border-radius: 12px;
+  background: var(--sl-color-neutral-0);
+}
+
+section.history .history-row img.media {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--sl-color-neutral-200);
+}
+
+section.history .history-row .media-skel {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+section.history .history-row .body .meta-top {
+  font-size: 12px;
+  color: var(--sl-color-neutral-600);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+section.history .history-row .body .meta-top .dot {
+  opacity: .5;
+}
+
+section.history .history-row .body .title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+section.history .history-row .body .meta-bottom {
+  font-size: 12px;
+  color: var(--sl-color-neutral-700);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+section.history .history-row .actions {
+  display: flex;
+  align-items: center;
+}
+
+sl-dialog.history-dialog::part(panel) {
+  border-radius: 16px;
+}
+
+.history-dialog .detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 16px;
+}
+
+.history-dialog .detail-left .detail-media {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--sl-color-neutral-200);
+}
+
+.history-dialog .detail-right h3 {
+  margin: 0 0 6px;
+}
+
+.history-dialog .detail-meta {
+  font-size: .92rem;
+  color: var(--sl-color-neutral-700);
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.history-dialog .detail-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width:720px) {
+  .history-dialog .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+section.history .load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
 :root {
   --header-height: 64px;
   --container-max: 1200px;
