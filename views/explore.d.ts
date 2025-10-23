@@ -14,6 +14,7 @@ export declare class Explore {
     private reqToken;
     private sentinel;
     private io?;
+    private dialog;
     constructor();
     destroy(): void;
     private reset;
@@ -21,6 +22,12 @@ export declare class Explore {
     private loadNextPage;
     private renderItems;
     private renderCard;
+    private onBuy;
+    private onCancel;
+    private removeCard;
+    private openDetailModal;
+    private renderDetail;
+    private toast;
     private renderSkeletons;
     private stripSkeletons;
     private updateFooterState;

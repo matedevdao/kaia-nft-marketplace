@@ -2522,6 +2522,59 @@ section.explore .nft-card .dialogue-row {
     color: var(--sl-color-neutral-400);
   }
 }
+
+/* ===== 상세 모달 ===== */
+sl-dialog.listing-dialog::part(panel) {
+  border-radius: 16px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 16px;
+}
+
+.detail-left .detail-media {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--sl-color-neutral-200);
+}
+
+.detail-right h3 {
+  margin: 0 0 6px;
+}
+
+.detail-meta {
+  font-size: 0.92rem;
+  color: var(--sl-color-neutral-700);
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.detail-desc {
+  margin: 8px 0 14px;
+  line-height: 1.5;
+}
+
+.detail-desc.muted {
+  color: var(--sl-color-neutral-600);
+  font-style: italic;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 720px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
 :root {
   --header-height: 64px;
   --container-max: 1200px;
