@@ -79,4 +79,53 @@ export type GetListingByIdOptions = {
 export declare function getListingById(list_id: string | number, opts?: GetListingByIdOptions): Promise<{
     item: ActiveListing;
 }>;
+export type HistoryEventKind = "LISTED" | "SOLD" | "CANCELLED" | "TRANSFER_IN" | "TRANSFER_OUT";
+export type HistoryEvent = {
+    event_id: number;
+    kind: HistoryEventKind;
+    tx_hash: string;
+    block_number: number | null;
+    ts_sec: number | null;
+    nft_address: string;
+    token_id: string;
+    price_wei: string | null;
+    actor: string | null;
+    from: string | null;
+    to: string | null;
+    nft: {
+        collection: string;
+        id: number;
+        name: string;
+        description?: string;
+        image: string;
+        external_url?: string;
+        animation_url?: string;
+        traits?: Record<string, string | number>;
+        parts?: Record<string, string | number>;
+        holder: string;
+        contract_addr: string;
+        thumbnail?: string;
+    } | null;
+};
+export type GetHistoryParams = {
+    account?: string;
+    nft_address?: string;
+    kind?: HistoryEventKind;
+    cursor?: string | number;
+    limit?: number;
+    signal?: AbortSignal;
+};
+export type GetHistoryResponse = {
+    items: HistoryEvent[];
+    nextCursor: string | null;
+    filters: {
+        account: string | null;
+        nft_address: string | null;
+        kind: HistoryEventKind | null;
+    };
+    pageInfo: {
+        limit: number;
+    };
+};
+export declare function getHistory(params?: GetHistoryParams): Promise<GetHistoryResponse>;
 //# sourceMappingURL=nfts.d.ts.map
