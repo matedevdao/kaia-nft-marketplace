@@ -130,12 +130,12 @@ export class MyItems {
     const btnSend = el('sl-button', { size: 'small', variant: 'neutral', outline: true }, '보내기');
 
     btnList.addEventListener('click', () => {
-      if (!contract) return this.showError('컨트랙트 주소를 찾을 수 없습니다.');
+      if (!contract) return this.toast('warning', '컨트랙트 주소를 찾을 수 없습니다.');
       this.openListDialog({ contract, tokenId: BigInt(nft.id), nft });
     });
 
     btnSend.addEventListener('click', () => {
-      if (!contract) return this.showError('컨트랙트 주소를 찾을 수 없습니다.');
+      if (!contract) return this.toast('warning', '컨트랙트 주소를 찾을 수 없습니다.');
       this.openSendDialog({ contract, tokenId: BigInt(nft.id), nft });
     });
 
@@ -161,12 +161,12 @@ export class MyItems {
   private async confirmSend() {
     const to = String((this.iptTo as any).value ?? '').trim() as `0x${string}`;
     if (!to || !isAddress(to)) {
-      this.stateBar.replaceChildren(el('sl-alert', { variant: 'warning', open: true }, '유효한 수신자 주소를 입력하세요.'));
+      this.toast('warning', '유효한 수신자 주소를 입력하세요.');
       return;
     }
     const me = getAccount(wagmiConfig)?.address as `0x${string}` | undefined;
     if (!me) {
-      this.stateBar.replaceChildren(el('sl-alert', { variant: 'warning', open: true }, '지갑이 연결되어 있지 않습니다.'));
+      this.toast('warning', '지갑이 연결되어 있지 않습니다.');
       return;
     }
 
@@ -208,7 +208,7 @@ export class MyItems {
   private async confirmList() {
     const priceEth = String((this.iptPrice as any).value ?? '').trim();
     if (!priceEth || Number(priceEth) <= 0) {
-      this.stateBar.replaceChildren(el('sl-alert', { variant: 'warning', open: true }, '유효한 가격(KAIA)을 입력하세요.'));
+      this.toast('warning', '유효한 가격(KAIA)을 입력하세요.');
       return;
     }
     const detail = { ...this.pending, priceEth };

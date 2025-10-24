@@ -239,7 +239,7 @@ export class Explore {
       // 0) 연결 확인 및 내 주소 얻기
       const acc = getAccount(wagmiConfig);
       if (!acc?.address) {
-        this.toast("지갑이 연결되어 있지 않습니다.", "warning");
+        this.toast("warning", "지갑이 연결되어 있지 않습니다.");
         return;
       }
 
@@ -250,38 +250,38 @@ export class Explore {
       const priceWei = BigInt(it.price_wei);
       if (bal.value < priceWei) {
         this.toast(
+          "warning",
           `잔액이 부족합니다. 필요: ${formatEther(priceWei)} ${bal.symbol} / 보유: ${bal.formatted} ${bal.symbol}`,
-          "warning"
         );
         return;
       }
 
       // 3) 통과하면 구매 진행
-      this.toast("구매 트랜잭션 전송 중…");
+      this.toast("primary", "구매 트랜잭션 전송 중…");
       const { hash } = await buyListing(BigInt(it.list_id), priceWei);
-      this.toast(`구매 전송 완료: ${short(hash)}`);
+      this.toast("success", `구매 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
       this.closeDetailIfOpen();
       await syncNftOwnershipFromEventsApi();
       await syncMarketplaceEventsApi();
     } catch (e: any) {
-      this.toast(e?.shortMessage || e?.message || "구매 실패", "danger");
+      this.toast("danger", e?.shortMessage || e?.message || "구매 실패");
     }
   }
 
   private async onCancel(it: ActiveListing) {
     try {
-      this.toast("리스팅 취소 전송 중…");
+      this.toast("primary", "리스팅 취소 전송 중…");
       const { hash } = await cancelListing(BigInt(it.list_id));
-      this.toast(`취소 전송 완료: ${short(hash)}`);
+      this.toast("success", `취소 전송 완료: ${short(hash)}`);
       // 성공 시 카드 제거
       this.removeCard(it.list_id);
       this.closeDetailIfOpen();
       await syncNftOwnershipFromEventsApi()
       await syncMarketplaceEventsApi()
     } catch (e: any) {
-      this.toast(e?.shortMessage || e?.message || "취소 실패", "danger");
+      this.toast("danger", e?.shortMessage || e?.message || "취소 실패");
     }
   }
 
@@ -372,10 +372,10 @@ export class Explore {
   }
 
   // ---- UI helpers ----
-  private toast(message: string, variant: "primary" | "success" | "neutral" | "warning" | "danger" = "neutral") {
-    const t = el("sl-alert", { variant, open: true, duration: 3000 }, message);
-    this.stateBar.appendChild(t);
-    setTimeout(() => t.remove(), 3200);
+  private toast(variant: 'primary' | 'success' | 'neutral' | 'warning' | 'danger', msg: string) {
+    const a = el('sl-alert', { variant, duration: 3000, closable: true }, msg);
+    document.body.appendChild(a);
+    (customElements.whenDefined('sl-alert') as any).then(() => (a as any).toast?.());
   }
 
   private renderSkeletons(n = 8, append = false) {
