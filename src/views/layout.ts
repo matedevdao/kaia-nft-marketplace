@@ -52,7 +52,7 @@ export class Layout {
       { label: '메뉴', placement: 'start' },
       el('div.drawer-body',
         el('div.menu-card', drawerMenu),
-        drawerFooter
+        drawerFooter,
       )
     ) as HTMLElement;
 

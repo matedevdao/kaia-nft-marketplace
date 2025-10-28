@@ -65,6 +65,27 @@ function createRainbowKit() {
   return container;
 }
 
+function showKlipToast(message = 'Klip을 사용하시는 경우, WalletConnect를 통해 접속해주세요.') {
+  const wrapper = document.createElement('div');
+  wrapper.style.position = 'fixed';
+  wrapper.style.bottom = '0';
+  wrapper.style.right = '0';
+  wrapper.style.padding = '10px';
+  wrapper.style.zIndex = '2147483647';
+
+  const alert = document.createElement('sl-alert') as HTMLElement & { toast?: () => void };
+  alert.setAttribute('variant', 'primary');
+  alert.setAttribute('closable', 'true');
+  alert.setAttribute('duration', '4000');
+  alert.setAttribute('open', 'true');
+  alert.innerHTML = `
+    <sl-icon slot="icon" name="info-circle"></sl-icon>
+    ${message}
+  `;
+  wrapper.appendChild(alert);
+  document.body.appendChild(wrapper);
+}
+
 function createConnectButton() {
   const container = el('.connect-button');
   createRoot(container).render(
@@ -76,6 +97,11 @@ function createConnectButton() {
       </WagmiProvider>
     </QueryClientProvider>
   );
+
+  container.addEventListener('click', () => {
+    showKlipToast();
+  });
+
   return container;
 }
 const publicClient = getPublicClient(config, { chainId: kaia.id });
